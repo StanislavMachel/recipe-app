@@ -86,6 +86,7 @@
 						<additioncalClasspathElement>${basedir}/target/classes</additioncalClasspathElement>
 					</additionalClasspathElements>
 					<parallel>none</parallel>
+					<useSystemClassLoader>false</useSystemClassLoader>
 				</configuration>
 				<executions>
 					<execution>
