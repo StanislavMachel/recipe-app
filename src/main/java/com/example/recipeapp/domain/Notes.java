@@ -18,6 +18,6 @@ public class Notes {
     private Recipe recipe;
 
     @Lob //clob(Character Large Object) column in database
-    private String RecipeNotes;
+    private String recipeNotes;
 
 }
