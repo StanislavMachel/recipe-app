@@ -2,6 +2,7 @@ package com.example.recipeapp.controllers;
 
 import com.example.recipeapp.commands.RecipeCommand;
 import com.example.recipeapp.domain.Recipe;
+import com.example.recipeapp.exceptions.NotFoundException;
 import com.example.recipeapp.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +26,9 @@ public class RecipeControllerTest {
     @Mock
     RecipeService recipeService;
 
-    RecipeController recipeController;
+    private RecipeController recipeController;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() {
@@ -95,5 +96,15 @@ public class RecipeControllerTest {
                 .andExpect(view().name("redirect:/"));
 
         verify(recipeService, times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
     }
 }

@@ -3,6 +3,7 @@ package com.example.recipeapp.services;
 import com.example.recipeapp.converters.RecipeCommandToRecipe;
 import com.example.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.recipeapp.domain.Recipe;
+import com.example.recipeapp.exceptions.NotFoundException;
 import com.example.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
 
-    RecipeServiceImpl recipeService;
+    private RecipeServiceImpl recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
@@ -31,7 +32,7 @@ public class RecipeServiceImplTest {
     RecipeCommandToRecipe recipeCommandToRecipe;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
@@ -65,9 +66,21 @@ public class RecipeServiceImplTest {
 
     @Test
     public void testDeleteById(){
-        Long idToDelete =  Long.valueOf(2L);
+        Long idToDelete =  2L;
         recipeService.deleteById(idToDelete);
 
         verify(recipeRepository, times(1)).deleteById(anyLong());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() {
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+
+        //should go boom
     }
 }
