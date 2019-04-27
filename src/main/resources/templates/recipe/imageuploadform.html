@@ -14,35 +14,24 @@
 </head>
 <body>
 <!--/*@thymesVar id="recipe" type="com.example.recipeapp.domain.Recipe"*/-->
-<!--/*@thymesVar id="recipes" type="java.util.List"*/-->
-<div class="container-fluid" style="margin-top: 20px;">
+<div class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <div class="card bg-primary">
-                <div class="card-header">
-                    <h1 class="card-title">List of recipes</h1>
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h1 class="card-title">Upload a new recipe image</h1>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
-                    <table class="table table-hover">
-                        <thead class="thead-inverse">
-                        <tr>
-                            <td>Id</td>
-                            <td>Description</td>
-                            <td>View</td>
-                            <td>Update</td>
-                            <td>Delete</td>
-                        </tr>
-                        </thead>
-                        <tr th:each="recipe : ${recipes}">
-                            <td th:text="${recipe.id}">Template Id</td>
-                            <td th:text="${recipe.description}">Template Description</td>
-                            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + '/show'">View</a></td>
-                            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + '/update'">Update</a></td>
-                            <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}} + '/delete'">Delete</a></td>
-                        </tr>
-                    </table>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <form  action="http:\\localhost" method="post" enctype="multipart/form-data"
+                                   th:action="@{'/recipe/' + ${recipe.getId()} + '/image'}">
+                                <label class="control-label">Select File</label>
+                                <input id="imagefile" name="imagefile" type="file" class="file">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
