@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class RecipeController {
 
     private final RecipeService recipeService;
-    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
+    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeForm";
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
@@ -60,7 +60,7 @@ public class RecipeController {
     @GetMapping("/recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
-        return "recipe/recipeForm";
+        return RECIPE_RECIPEFORM_URL;
     }
 
     @GetMapping("/recipe/{id}/delete")
