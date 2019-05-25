@@ -2,10 +2,8 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-version: 2.1
+version: 2
 jobs:
-  orbs:
-    codecov: codecov/codecov@1.0.4
   build:
     docker:
     # specify the version you desire here
@@ -40,7 +38,11 @@ jobs:
         key: v1-dependencies-{{ checksum "pom.xml" }}
 
     # run tests!
-    - run: mvn integration-test
+    - run: mvn integration-test cobertura:cobertura
 
-    - codecov/upload:
-        file: {{ coverage_report_filepath }}
+    - store_test_results:
+        path: target/surefire-reports
+
+    - run:
+        name: Send to CodeCov
+        command: bash <(curl -s https://codecov.io/bash)
