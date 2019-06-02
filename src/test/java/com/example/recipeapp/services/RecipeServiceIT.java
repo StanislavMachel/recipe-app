@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static junit.framework.TestCase.assertEquals;
 
-@Ignore
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceIT {
