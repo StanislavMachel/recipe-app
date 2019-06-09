@@ -1,9 +1,10 @@
 package com.example.recipeapp.services;
 
 import com.example.recipeapp.commands.IngredientCommand;
+import reactor.core.publisher.Mono;
 
 public interface IngredientService {
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
-    IngredientCommand saveIngredientCommand(IngredientCommand command);
-    void deleteById(String recipeId, String idToDelete);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
+    Mono<IngredientCommand> saveIngredientCommand(IngredientCommand command);
+    Mono<Void> deleteById(String recipeId, String idToDelete);
 }
